@@ -87,6 +87,7 @@ node apothem_getBalances_Pli.js
 
 ### 複数WalletにあるSRX（or PLI）を、1つのアドレスにまとめて送金する
 - `.env`の`RECIPIENT_ADDRESS=YOUR_RECIPIENT_WALLET_ADDRESS`は、送金先のアドレスを入力してください。
+- トランザクションを実行するために、最低限のXDCの残高（0.1XDCでもあれば）が必要です。
 - 例. RECIPIENT_ADDRESS=xdc15263748....
 ---
 - SRXバージョン
