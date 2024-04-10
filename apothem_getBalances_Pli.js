@@ -9,7 +9,7 @@ const privateKeys = Object.keys(process.env)
 
 // PLI_ABIとコントラクトアドレス
 const tokenABI = require('./source/PliToken.json');
-const tokenAddress = '0x33f4212b027E22aF7e6BA21Fc572843C0D701CD1'; // 直接トークンアドレスを設定
+const tokenAddress = '0x33f4212b027E22aF7e6BA21Fc572843C0D701CD1'; // 直接Apothem PLI アドレスを設定
 const tokenContract = new xdc3.eth.Contract(tokenABI, tokenAddress);
 
 const fs = require('fs'); // ファイルシステムモジュールをインポート

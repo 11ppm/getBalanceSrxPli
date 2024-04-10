@@ -75,6 +75,16 @@ node getBalances_Srx.js
 node getBalances_Pli.js
 ```
 
+- PLIテストネットバージョン
+```
+node apothem_getBalances_Pli.js
+```
+テスト用XDCとPLIは以下から取得してください
+- Apothem XDC : https://faucet.blocksscan.io/
+- Apothem PLI : https://faucet.goplugin.co/
+
+
+
 ### 複数WalletにあるSRX（or PLI）を、1つのアドレスにまとめて送金する
 - `.env`の`RECIPIENT_ADDRESS=YOUR_RECIPIENT_WALLET_ADDRESS`は、送金先のアドレスを入力してください。
 - 例. RECIPIENT_ADDRESS=xdc15263748....
