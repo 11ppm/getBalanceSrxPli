@@ -26,8 +26,8 @@
 
 ## 1. リポジトリをコピー
 ```
-cd && git clone https://github.com/11ppm/getBalanceSRX
-cd ~/getBalanceSRX
+cd && git clone https://github.com/11ppm/getBalanceSrxPli
+cd ~/getBalanceSrxPli
 ```
 
 ## 2. 実行環境の確認
