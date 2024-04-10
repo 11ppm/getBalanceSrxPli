@@ -29,7 +29,7 @@ function getCurrentDateTime() {
 // 残高を取得してCSVファイルに保存
 async function getBalancesAndSave() {
     const dateTime = getCurrentDateTime();
-    let csvHeader = "Name,Address,XDC Balance (XDC),SRX Balance (SRX)";
+    let csvHeader = "Name,Address,XDC Balance (XDC),PLI Balance (PLI)";
     let csvContent = `${csvHeader}\n`;
 
     console.log(csvHeader); // コンソールにCSVヘッダーを表示
@@ -38,13 +38,13 @@ async function getBalancesAndSave() {
         const name = `XDCWallet${i + 1}`;
         const address = xdc3.eth.accounts.privateKeyToAccount(privateKeys[i]).address;
 
-        // XDCとSRXの残高を取得
+        // XDCとPLIの残高を取得
         const xdcBalanceWei = await xdc3.eth.getBalance(address);
         const xdcBalance = xdc3.utils.fromWei(xdcBalanceWei, 'ether');
-        const srxBalance = await tokenContract.methods.balanceOf(address).call();
-        const srxBalanceFormatted = xdc3.utils.fromWei(srxBalance, 'ether');
+        const pliBalance = await tokenContract.methods.balanceOf(address).call();
+        const pliBalanceFormatted = xdc3.utils.fromWei(pliBalance, 'ether');
 
-        const csvLine = `${name},${address},${xdcBalance},${srxBalanceFormatted}`;
+        const csvLine = `${name},${address},${xdcBalance},${pliBalanceFormatted}`;
         csvContent += `${csvLine}\n`;
 
         console.log(csvLine); // コンソールに各行の内容を表示
