@@ -54,7 +54,8 @@ npm install xdc3 dotenv
 ```
 
 ## 4. .envを編集
-- XDCWalletの秘密鍵を記入します。とりあえず`PRIVATE_KEY_1`から`PRIVATE_KEY_10`まで書いています。必要な数だけ増減して記入してください。秘密鍵が記入されていない場合は、スルーされます。
+- XDCWalletの任意の名前を`MyWallet1`に、それに対応する秘密鍵を`secret_key_for_mywallet1`に記入します。
+- とりあえずWalletは10個用意していますが、必要な数だけ増減して記入してください。秘密鍵が記入されていない場合は、スルーされます。
 - 複数ウォレットから１つのウォレットに送金する宛先・ウォレットアドレス`YOUR_RECIPIENT_WALLET_ADDRESS`を記入してください。アドレスの頭は、xdcから始まって結構です。
 
 <img src="img/01.png">

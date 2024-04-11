@@ -1,18 +1,23 @@
-require('dotenv').config(); 
-const XDC3 = require('xdc3'); 
-const xdc3 = new XDC3(new XDC3.providers.HttpProvider('https://rpc.ankr.com/xdc')); // XDC RPCプロバイダに接続
+require('dotenv').config();
+const XDC3 = require('xdc3');
+const xdc3 = new XDC3(new XDC3.providers.HttpProvider('https://rpc.ankr.com/xdc'));
 
-// .envから秘密鍵を読み込み
-const privateKeys = Object.keys(process.env)
-  .filter(key => key.startsWith('PRIVATE_KEY_') && process.env[key])
-  .map(key => process.env[key]);
+const fs = require('fs');
+
+// .envからウォレットの名前と秘密鍵を読み込み
+const wallets = Object.keys(process.env)
+  .filter(key => key.startsWith('PRIVATE_KEY_'))
+  .map(key => {
+    return {
+      name: process.env[`WALLET_NAME_${key.match(/\d+/)[0]}`],
+      privateKey: process.env[key]
+    };
+  });
 
 // SRX_ABIとコントラクトアドレス
 const tokenABI = require('./source/SrxToken.json');
 const tokenAddress = process.env.SRX_TOKEN_ADDRESS;
 const tokenContract = new xdc3.eth.Contract(tokenABI, tokenAddress);
-
-const fs = require('fs'); // ファイルシステムモジュールをインポート
 
 // 現在の日時を取得
 function getCurrentDateTime() {
@@ -29,14 +34,13 @@ function getCurrentDateTime() {
 // 残高を取得してCSVファイルに保存
 async function getBalancesAndSave() {
     const dateTime = getCurrentDateTime();
-    let csvHeader = "Name,Address,XDC Balance (XDC),SRX Balance (SRX)";
+    let csvHeader = "Wallet Name,Address,XDC Balance (XDC),SRX Balance (SRX)";
     let csvContent = `${csvHeader}\n`;
 
     console.log(csvHeader); // コンソールにCSVヘッダーを表示
 
-    for (let i = 0; i < privateKeys.length; i++) {
-        const name = `XDCWallet${i + 1}`;
-        const address = xdc3.eth.accounts.privateKeyToAccount(privateKeys[i]).address;
+    for (const wallet of wallets) {
+        const address = xdc3.eth.accounts.privateKeyToAccount(wallet.privateKey).address;
 
         // XDCとSRXの残高を取得
         const xdcBalanceWei = await xdc3.eth.getBalance(address);
@@ -44,7 +48,7 @@ async function getBalancesAndSave() {
         const srxBalance = await tokenContract.methods.balanceOf(address).call();
         const srxBalanceFormatted = xdc3.utils.fromWei(srxBalance, 'ether');
 
-        const csvLine = `${name},${address},${xdcBalance},${srxBalanceFormatted}`;
+        const csvLine = `${wallet.name},${address},${xdcBalance},${srxBalanceFormatted}`;
         csvContent += `${csvLine}\n`;
 
         console.log(csvLine); // コンソールに各行の内容を表示
